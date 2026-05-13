@@ -1,0 +1,30 @@
+# Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Database
+data/
+*.db
+*.dbm
+
+# Logs and outputs
+*.log
+test_output/
+test_output.log
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.settings/
+.project
+.classpath
+bin/
+
+# OS
+Thumbs.db
+Desktop.ini
