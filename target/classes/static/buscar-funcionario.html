@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Buscar Funcionário por CPF</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #0001;
+    }
+
+    input{
+      width: 95%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    .erro {
+      color: red;
+    }
+
+    .dados {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Buscar Funcionário por CPF</h2>
+    <input type="text" id="cpf" placeholder="Digite o CPF" />
+    <button onclick="buscarFuncionario()" id="buscar">Buscar</button>
+    <p id="erro" class="erro"></p>
+    <div id="dados" class="dados"></div>
+  </div>
+
+  <script>
+
+    document.getElementById('cpf').addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                document.getElementById('buscar').click();
+            }
+        });
+
+    function buscarFuncionario() {
+      const cpf = document.getElementById('cpf').value.trim();
+      const erro = document.getElementById('erro');
+      const dados = document.getElementById('dados');
+      erro.textContent = '';
+      dados.innerHTML = '';
+      if (!cpf) {
+        erro.textContent = 'Digite um CPF válido.';
+        return;
+      }
+      fetch(`/funcionarios/${cpf}`)
+        .then(res => {
+          if (!res.ok) throw new Error('Funcionário não encontrado.');
+          return res.json();
+        })
+        .then(funcionario => {
+          dados.innerHTML = `
+            <h3>Dados do Funcionário</h3>
+            <p><strong>Nome:</strong> ${funcionario.nome}</p>
+            <p><strong>CPF:</strong> ${funcionario.cpf}</p>
+            <p><strong>Regime:</strong> ${funcionario.regime}</p>
+            <p><strong>Pedidos de Férias utilizados esse ano:</strong> ${funcionario.parcelasUsadasNoCicloAnual}</p>
+            <p><strong>Dias disponíveis para férias no Ano Atual:</strong> ${funcionario.diasDisponiveisAnoAtual}</p>
+            <p><strong>Dias de férias acumulados:</strong> ${funcionario.numeroDeDiasDeFeriasAcumulados}</p>
+          `;
+        })
+        .catch(e => {
+          erro.textContent = e.message;
+        });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.agr.gestaodeferias.agr_gestao_ferias.FeriasServiceTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.251 s -- in com.agr.gestaodeferias.agr_gestao_ferias.FeriasServiceTest
